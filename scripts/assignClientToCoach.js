@@ -1,10 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
-require("dotenv").config();
+import dotenv from "dotenv";
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+dotenv.config();
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseUrl = "";
+const serviceRoleKey = "";
+
+const supabase = createClient(supabaseUrl, serviceRoleKey);
 
 const assignClientToCoach = async (coachId, clientId) => {
   try {
@@ -19,11 +21,11 @@ const assignClientToCoach = async (coachId, clientId) => {
       `Client ${clientId} assigned to coach ${coachId} successfully.`
     );
   } catch (error) {
-    console.error("Error assigning client to coach:", error);
+    console.error("Error assigning client to coach:", error.message);
   }
 };
 
-// Replace with actual IDs
+// Replace with actual IDs for testing
 const coachId = "coach-uuid";
 const clientId = "client-uuid";
 

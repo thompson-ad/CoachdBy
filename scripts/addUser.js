@@ -1,38 +1,36 @@
 const { createClient } = require("@supabase/supabase-js");
 require("dotenv").config();
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+const supabaseUrl = "";
+const serviceRoleKey = "";
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-const addUser = async (email, password, role, firstName, lastName) => {
-  const { user, error } = await supabase.auth.signUp({
+const addUser = async (email, roles, firstName, lastName) => {
+  // create a user in the auth system without a password
+  // note that a trigger function is set up to automatically add users to the profiles table
+
+  const { error } = await supabase.auth.admin.createUser({
     email,
-    password,
-    options: {
-      data: {
-        first_name: firstName,
-        last_name: lastName,
-        role,
-      },
+    email_confirm: true, // Since we are manually creating users, we can confirm their email directly.
+    user_metadata: {
+      first_name: firstName,
+      last_name: lastName,
+      roles, // Pass roles as an array
     },
   });
 
   if (error) {
-    console.error("Error signing up:", error);
+    console.error("Error creating auth user:", error);
     return;
   }
 
-  console.log(`User ${email} added successfully as ${role}`);
+  console.log(
+    `User ${email} added successfully with roles ${roles.join(", ")}`
+  );
 };
 
 // Example usage
-addUser("coach@example.com", "temporaryPassword123", "coach", "Cam", "Ralph");
-addUser(
-  "client@example.com",
-  "temporaryPassword123",
-  "client",
-  "Aaron",
-  "Thompson"
-);
+addUser("coach@example.com", ["coach"], "Cam", "Ralph");
+addUser("thompson_ad@outlook.com", ["client"], "Aaron", "Thompson");
+addUser("coachclient@example.com", ["coach", "client"], "Jamie", "Doe");
