@@ -78,7 +78,6 @@ export type Database = {
           first_name: string | null
           id: string
           last_name: string | null
-          role: string
           updated_at: string | null
         }
         Insert: {
@@ -87,7 +86,6 @@ export type Database = {
           first_name?: string | null
           id: string
           last_name?: string | null
-          role: string
           updated_at?: string | null
         }
         Update: {
@@ -96,7 +94,6 @@ export type Database = {
           first_name?: string | null
           id?: string
           last_name?: string | null
-          role?: string
           updated_at?: string | null
         }
         Relationships: [
@@ -202,6 +199,21 @@ export type Database = {
           },
         ]
       }
+      roles: {
+        Row: {
+          id: number
+          role_name: string
+        }
+        Insert: {
+          id?: number
+          role_name: string
+        }
+        Update: {
+          id?: number
+          role_name?: string
+        }
+        Relationships: []
+      }
       section_movements: {
         Row: {
           movement_id: string
@@ -275,6 +287,36 @@ export type Database = {
             columns: ["workout_id"]
             isOneToOne: false
             referencedRelation: "workouts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          profile_id: string
+          role_id: number
+        }
+        Insert: {
+          profile_id: string
+          role_id: number
+        }
+        Update: {
+          profile_id?: string
+          role_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_roles_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
             referencedColumns: ["id"]
           },
         ]
