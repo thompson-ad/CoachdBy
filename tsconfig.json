@@ -2,6 +2,7 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -13,7 +14,8 @@
     "babel.config.js",
     "metro.config.js",
     "android",
-    "ios"
+    "ios",
+    ".eslintrc.js"
   ],
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

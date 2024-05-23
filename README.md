@@ -19,3 +19,4 @@
 - [ ] can only try once every 60s
 - [ ] cannot login if you are not in the DB
 - [ ] for people that are both coaches and client I need some sort of switching experience
+- [ ] sign in, sign out, store the session, restore the session, access user details and ID across the app and listen fot the events

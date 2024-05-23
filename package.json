@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "gen:types": "supabase gen types typescript --project-id liujyuhvfhfotmqdeass > database.types.ts"
+    "gen:types": "supabase gen types typescript --project-id liujyuhvfhfotmqdeass > database.types.ts",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@dev-plugins/react-navigation": "^0.0.6",
@@ -33,6 +34,11 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
+    "eslint": "^8.57.0",
+    "eslint-config-expo": "^7.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5",
     "supabase": "^1.167.4",
     "typescript": "~5.3.3"
   },
