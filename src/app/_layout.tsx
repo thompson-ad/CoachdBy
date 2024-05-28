@@ -1,10 +1,4 @@
-import {
-  Slot,
-  SplashScreen,
-  Stack,
-  useNavigationContainerRef,
-} from 'expo-router';
-import '../../global.css';
+import { SplashScreen, Stack, useNavigationContainerRef } from 'expo-router';
 import { useReactNavigationDevTools } from '@dev-plugins/react-navigation';
 import { Session } from '@supabase/supabase-js';
 import { View } from 'react-native';
