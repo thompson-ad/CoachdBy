@@ -7,6 +7,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { AuthProvider } from '@/providers/AuthProvider';
 import { DeepLinkProvider } from '@/providers/DeepLinkProvider';
 import { supabase } from '@/api/supabase/client';
+import { TamaguiProvider } from 'tamagui';
+import { useFonts } from 'expo-font';
+import { config } from '../../tamagui.config';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,6 +20,11 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const [fontLoaded] = useFonts({
+    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
+    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+  });
+
   const [sessionLoadAttempted, setSessionLoadAttempted] = useState(false);
   const [initialSession, setInitialSession] = useState<Session | null>(null);
 
@@ -34,12 +42,12 @@ function RootLayoutNav() {
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
-    if (sessionLoadAttempted) {
+    if (fontLoaded && sessionLoadAttempted) {
       await SplashScreen.hideAsync();
     }
   }, [sessionLoadAttempted]);
 
-  if (!sessionLoadAttempted) {
+  if (!fontLoaded || !sessionLoadAttempted) {
     return null;
   }
 
@@ -61,7 +69,9 @@ function Providers({
 }) {
   return (
     <AuthProvider initialSession={initialSession}>
-      <DeepLinkProvider>{children}</DeepLinkProvider>
+      <DeepLinkProvider>
+        <TamaguiProvider config={config}>{children}</TamaguiProvider>
+      </DeepLinkProvider>
     </AuthProvider>
   );
 }

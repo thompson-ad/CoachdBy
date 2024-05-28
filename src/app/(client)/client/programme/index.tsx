@@ -1,13 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import { useUser } from '@/providers/AuthProvider';
 import { useSupabaseService } from '@/api/supabase/supabaseService';
+import { Button, Paragraph, Text } from 'tamagui';
 
 type Profile = {
   id: string;
@@ -29,6 +24,9 @@ type Programme = {
     movements: any;
   }[];
 };
+
+// Construct my first screen with expo router
+// See how the example templates go about it
 
 export default function ClientHome() {
   const user = useUser();
@@ -74,22 +72,22 @@ export default function ClientHome() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {error ? (
-        <Text style={{ color: 'red' }}>{error}</Text>
+        <Text>{error}</Text>
       ) : (
         <>
           <View
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
           >
-            {coach && (
-              <Text style={{ fontSize: 20 }}>Coach: {coach.first_name}</Text>
-            )}
+            {coach && <Text>Coach: {coach.first_name}</Text>}
           </View>
           <ScrollView style={{ flex: 1 }}>
             {programme && (
-              <Text>Program: {JSON.stringify(programme, null, 2)}</Text>
+              <Paragraph>
+                Program: {JSON.stringify(programme, null, 2)}
+              </Paragraph>
             )}
           </ScrollView>
-          <Button title="Sign Out" onPress={signOut} />
+          <Button onPress={signOut}>Sign Out</Button>
         </>
       )}
     </View>

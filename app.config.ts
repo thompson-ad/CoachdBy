@@ -35,7 +35,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       projectId: 'dedf7329-00ff-4541-bb20-8e3c4c388a3d',
     },
   },
-  plugins: ['expo-router'],
+  plugins: ['expo-router', 'expo-font'],
   experiments: {
     typedRoutes: true,
   },
