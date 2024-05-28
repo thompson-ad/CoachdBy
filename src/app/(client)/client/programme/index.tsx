@@ -1,18 +1,97 @@
-import { useSupabase } from '@/providers/AuthProvider';
-import { View, Text, Button } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  Button,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
+import { useUser } from '@/providers/AuthProvider';
+import { useSupabaseService } from '@/api/supabase/supabaseService';
+
+type Profile = {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  email: string;
+  phone?: string;
+  bio?: string;
+  profile_image_url?: string;
+};
+
+type Programme = {
+  coach_id: string | null;
+  name?: string;
+  workouts?: {
+    day: any;
+    name: any;
+    type: any;
+    movements: any;
+  }[];
+};
 
 export default function ClientHome() {
-  // sign out with supabase
-  const supabase = useSupabase();
+  const user = useUser();
+  const { fetchClientProgramme, fetchCoachProfile, signOut } =
+    useSupabaseService();
+  const [coach, setCoach] = useState<Profile | null>(null);
+  const [programme, setProgramme] = useState<Programme | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
-  };
+  const loadClientProgramme = useCallback(async () => {
+    if (!user) return;
+
+    try {
+      const programmeData = await fetchClientProgramme(user.id);
+      setProgramme(programmeData);
+
+      if (programmeData.coach_id) {
+        const coachData = await fetchCoachProfile(programmeData.coach_id);
+        setCoach(coachData);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchClientProgramme, fetchCoachProfile, user]);
+
+  useEffect(() => {
+    loadClientProgramme();
+  }, [loadClientProgramme]);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Client Home</Text>
-      <Button title="Sign Out" onPress={signOut} />
+      {error ? (
+        <Text style={{ color: 'red' }}>{error}</Text>
+      ) : (
+        <>
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            {coach && (
+              <Text style={{ fontSize: 20 }}>Coach: {coach.first_name}</Text>
+            )}
+          </View>
+          <ScrollView style={{ flex: 1 }}>
+            {programme && (
+              <Text>Program: {JSON.stringify(programme, null, 2)}</Text>
+            )}
+          </ScrollView>
+          <Button title="Sign Out" onPress={signOut} />
+        </>
+      )}
     </View>
   );
 }

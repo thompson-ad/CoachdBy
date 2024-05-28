@@ -216,6 +216,7 @@ export type Database = {
       };
       section_movements: {
         Row: {
+          circuit_group: string | null;
           movement_id: string;
           notes: string | null;
           reps: string;
@@ -223,8 +224,10 @@ export type Database = {
           rir: string | null;
           section_id: string;
           sets: number;
+          superset_group: string | null;
         };
         Insert: {
+          circuit_group?: string | null;
           movement_id: string;
           notes?: string | null;
           reps: string;
@@ -232,8 +235,10 @@ export type Database = {
           rir?: string | null;
           section_id: string;
           sets: number;
+          superset_group?: string | null;
         };
         Update: {
+          circuit_group?: string | null;
           movement_id?: string;
           notes?: string | null;
           reps?: string;
@@ -241,6 +246,7 @@ export type Database = {
           rir?: string | null;
           section_id?: string;
           sets?: number;
+          superset_group?: string | null;
         };
         Relationships: [
           {
@@ -264,6 +270,7 @@ export type Database = {
           created_at: string | null;
           id: string;
           name: string | null;
+          type: string | null;
           updated_at: string | null;
           workout_id: string | null;
         };
@@ -271,6 +278,7 @@ export type Database = {
           created_at?: string | null;
           id?: string;
           name?: string | null;
+          type?: string | null;
           updated_at?: string | null;
           workout_id?: string | null;
         };
@@ -278,6 +286,7 @@ export type Database = {
           created_at?: string | null;
           id?: string;
           name?: string | null;
+          type?: string | null;
           updated_at?: string | null;
           workout_id?: string | null;
         };
@@ -324,23 +333,29 @@ export type Database = {
       workouts: {
         Row: {
           created_at: string | null;
+          day: number | null;
           id: string;
           name: string;
           program_id: string | null;
+          type: string | null;
           updated_at: string | null;
         };
         Insert: {
           created_at?: string | null;
+          day?: number | null;
           id?: string;
           name: string;
           program_id?: string | null;
+          type?: string | null;
           updated_at?: string | null;
         };
         Update: {
           created_at?: string | null;
+          day?: number | null;
           id?: string;
           name?: string;
           program_id?: string | null;
+          type?: string | null;
           updated_at?: string | null;
         };
         Relationships: [
