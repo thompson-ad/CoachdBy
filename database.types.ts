@@ -41,25 +41,25 @@ export type Database = {
       };
       movements: {
         Row: {
-          created_at: string | null;
-          created_by: string | null;
+          created_at: string;
+          created_by: string;
           id: string;
           name: string;
-          updated_at: string | null;
+          updated_at: string;
         };
         Insert: {
-          created_at?: string | null;
-          created_by?: string | null;
+          created_at?: string;
+          created_by: string;
           id?: string;
           name: string;
-          updated_at?: string | null;
+          updated_at?: string;
         };
         Update: {
-          created_at?: string | null;
-          created_by?: string | null;
+          created_at?: string;
+          created_by?: string;
           id?: string;
           name?: string;
-          updated_at?: string | null;
+          updated_at?: string;
         };
         Relationships: [
           {
@@ -73,28 +73,28 @@ export type Database = {
       };
       profiles: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           email: string;
           first_name: string | null;
           id: string;
           last_name: string | null;
-          updated_at: string | null;
+          updated_at: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           email: string;
           first_name?: string | null;
           id: string;
           last_name?: string | null;
-          updated_at?: string | null;
+          updated_at?: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           email?: string;
           first_name?: string | null;
           id?: string;
           last_name?: string | null;
-          updated_at?: string | null;
+          updated_at?: string;
         };
         Relationships: [
           {
@@ -110,26 +110,26 @@ export type Database = {
         Row: {
           client_id: string | null;
           coach_id: string | null;
-          created_at: string | null;
+          created_at: string;
           id: string;
           name: string;
-          updated_at: string | null;
+          updated_at: string;
         };
         Insert: {
           client_id?: string | null;
           coach_id?: string | null;
-          created_at?: string | null;
+          created_at?: string;
           id?: string;
           name: string;
-          updated_at?: string | null;
+          updated_at?: string;
         };
         Update: {
           client_id?: string | null;
           coach_id?: string | null;
-          created_at?: string | null;
+          created_at?: string;
           id?: string;
           name?: string;
-          updated_at?: string | null;
+          updated_at?: string;
         };
         Relationships: [
           {
@@ -150,36 +150,36 @@ export type Database = {
       };
       progress: {
         Row: {
-          client_id: string | null;
-          created_at: string | null;
-          date: string | null;
+          client_id: string;
+          created_at: string;
+          date: string;
           id: string;
-          movement_id: string | null;
+          movement_id: string;
           reps: number;
           sets: number;
-          updated_at: string | null;
+          updated_at: string;
           weight: number;
         };
         Insert: {
-          client_id?: string | null;
-          created_at?: string | null;
-          date?: string | null;
+          client_id: string;
+          created_at?: string;
+          date?: string;
           id?: string;
-          movement_id?: string | null;
+          movement_id: string;
           reps: number;
           sets: number;
-          updated_at?: string | null;
+          updated_at?: string;
           weight: number;
         };
         Update: {
-          client_id?: string | null;
-          created_at?: string | null;
-          date?: string | null;
+          client_id?: string;
+          created_at?: string;
+          date?: string;
           id?: string;
-          movement_id?: string | null;
+          movement_id?: string;
           reps?: number;
           sets?: number;
-          updated_at?: string | null;
+          updated_at?: string;
           weight?: number;
         };
         Relationships: [
@@ -267,28 +267,28 @@ export type Database = {
       };
       sections: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           id: string;
           name: string | null;
           type: string | null;
-          updated_at: string | null;
-          workout_id: string | null;
+          updated_at: string;
+          workout_id: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           id?: string;
           name?: string | null;
           type?: string | null;
-          updated_at?: string | null;
-          workout_id?: string | null;
+          updated_at?: string;
+          workout_id: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           id?: string;
           name?: string | null;
           type?: string | null;
-          updated_at?: string | null;
-          workout_id?: string | null;
+          updated_at?: string;
+          workout_id?: string;
         };
         Relationships: [
           {
@@ -332,31 +332,31 @@ export type Database = {
       };
       workouts: {
         Row: {
-          created_at: string | null;
-          day: number | null;
+          created_at: string;
+          day: number;
           id: string;
           name: string;
-          program_id: string | null;
-          type: string | null;
-          updated_at: string | null;
+          program_id: string;
+          type: string;
+          updated_at: string;
         };
         Insert: {
-          created_at?: string | null;
-          day?: number | null;
+          created_at?: string;
+          day: number;
           id?: string;
           name: string;
-          program_id?: string | null;
-          type?: string | null;
-          updated_at?: string | null;
+          program_id: string;
+          type: string;
+          updated_at?: string;
         };
         Update: {
-          created_at?: string | null;
-          day?: number | null;
+          created_at?: string;
+          day?: number;
           id?: string;
           name?: string;
-          program_id?: string | null;
-          type?: string | null;
-          updated_at?: string | null;
+          program_id?: string;
+          type?: string;
+          updated_at?: string;
         };
         Relationships: [
           {

@@ -9,9 +9,10 @@ import { useRouter } from 'expo-router';
 const AuthCallback = () => {
   const link = useDeepLink();
   const supabase = useSupabase();
-  const router = useRouter();
-  const [message, setMessage] = useState('Signing in...');
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const router = useRouter();
 
   const createSessionFromUrl = useCallback(
     async (url: string) => {
@@ -19,6 +20,7 @@ const AuthCallback = () => {
 
       if (errorCode) {
         setMessage('Invalid link. Please try again.');
+        setIsError(true);
         throw new Error(errorCode);
       }
 
@@ -26,6 +28,7 @@ const AuthCallback = () => {
 
       if (!access_token || !refresh_token) {
         setMessage('Invalid or missing token. Please try again.');
+        setIsError(true);
         return;
       }
 
@@ -36,6 +39,7 @@ const AuthCallback = () => {
 
       if (error) {
         setMessage('Error creating session. Please try again.');
+        setIsError(true);
         throw error;
       }
 
@@ -49,36 +53,52 @@ const AuthCallback = () => {
       const url = event.link;
       try {
         const session = await createSessionFromUrl(url);
+        console.log('session', session);
         if (session) {
+          // Even though we have code for auto-redirection on session change
+          // in /(app)/_layout.tsx, the redirect doesn't work when the session
+          // is created by the callback because that screen is not on the stack yet
+
+          const user = session.user;
+          const role = user.user_metadata?.role;
+
+          if (role === 'coach') {
+            router.replace('/coach');
+          } else {
+            router.replace('/client');
+          }
           setMessage('Sign-in successful!');
+          setIsError(false);
         }
       } catch (error) {
         console.error('Error handling sign-in:', error);
+        setMessage('Failed to sign in. Please try again.');
+        setIsError(true);
       } finally {
         setIsLoading(false);
       }
     },
-    [createSessionFromUrl],
+    [createSessionFromUrl, router],
   );
 
   useEffect(() => {
     if (link) {
       handleDeepLink({ link });
     } else {
-      setMessage('No link provided. Please try again.');
       setIsLoading(false);
     }
   }, [handleDeepLink, link]);
-
-  const goBack = async () => {
-    router.back();
-  };
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>{message}</Text>
       {isLoading && <Text>Loading...</Text>}
-      <Button title="Try again" onPress={goBack} />
+      {!isLoading && isError && (
+        <Button
+          title="Go back to Sign In"
+          onPress={() => router.replace('(auth)/sign-in')}
+        />
+      )}
     </View>
   );
 };

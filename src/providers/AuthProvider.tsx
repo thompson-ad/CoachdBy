@@ -1,5 +1,4 @@
 import { AuthError, Session, SupabaseClient } from '@supabase/supabase-js';
-import { useRouter, useSegments } from 'expo-router';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { AppState } from 'react-native';
 
@@ -74,29 +73,6 @@ export const useUser = () => {
   return context.session?.user ?? null;
 };
 
-export function useProtectedRoute(session: Session | null) {
-  const segments = useSegments();
-  const router = useRouter();
-
-  useEffect(() => {
-    // Check if the user is in a screen in /auth or if they are at the root (/index.tsx)
-    const inAuthGroup = segments[0] === 'auth' || segments.length === 0;
-    const user = session?.user || null;
-
-    if (!user && !inAuthGroup) {
-      console.log('No user, redirecting to /');
-      router.replace('/');
-    } else if (user && inAuthGroup) {
-      console.log('User exists, redirecting to /client or /coach');
-      if (session?.user.user_metadata?.role === 'coach') {
-        router.replace('/coach');
-      } else {
-        router.replace('/client');
-      }
-    }
-  }, [session, segments, router]);
-}
-
 export const AuthProvider = ({
   initialSession,
   children,
@@ -106,10 +82,6 @@ export const AuthProvider = ({
   );
   const [error, setError] = useState<AuthError | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const router = useRouter();
-
-  useProtectedRoute(session);
 
   useEffect(() => {
     setIsLoading(true);
@@ -125,13 +97,12 @@ export const AuthProvider = ({
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event, newSession) => {
-      console.log('event', event);
       setSession(newSession);
     });
     return () => {
       data.subscription.unsubscribe();
     };
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     const handleAppStateChange = (state: string) => {

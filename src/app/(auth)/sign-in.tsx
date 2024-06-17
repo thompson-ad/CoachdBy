@@ -3,8 +3,10 @@ import { Button, Text, TextInput, View } from 'react-native';
 import { makeRedirectUri } from 'expo-auth-session';
 import { useSupabase } from '@/providers/AuthProvider';
 import { isAuthApiError } from '@supabase/supabase-js';
+import { useTranslation } from 'react-i18next';
 
-export default function App() {
+export default function SignIn() {
+  const { t } = useTranslation();
   const supabase = useSupabase();
   const [email, onChangeEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -19,7 +21,7 @@ export default function App() {
       const { error } = await supabase.auth.signInWithOtp({
         email: email,
         options: {
-          emailRedirectTo: `${redirectTo}auth/callback`,
+          emailRedirectTo: `${redirectTo}callback`,
           shouldCreateUser: false,
         },
       });
@@ -29,7 +31,6 @@ export default function App() {
         setIsButtonDisabled(false);
       } else {
         setMessage('Magic link sent successfully. Check your email.');
-        // Enable the button again after 60 seconds
         setTimeout(() => {
           setIsButtonDisabled(false);
         }, 60000);
@@ -57,17 +58,17 @@ export default function App() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Send magic link</Text>
+      <Text>{t('clientApp.auth.send_magic_link')}</Text>
       <TextInput
         keyboardType="email-address"
         textContentType="emailAddress"
         value={email.toLowerCase()}
         onChangeText={onChangeEmail}
-        placeholder="Sign in with your email"
+        placeholder={t('clientApp.auth.sign_in_with_email')}
       />
       <Button
         onPress={onPressSubmitEmail}
-        title="Submit"
+        title={t('clientApp.auth.submit')}
         accessibilityLabel="Submit email address"
         disabled={isButtonDisabled}
       />

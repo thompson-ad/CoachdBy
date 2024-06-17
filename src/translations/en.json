@@ -1,0 +1,15 @@
+{
+  "clientApp": {
+    "auth": {
+      "send_magic_link": "Send magic link",
+      "sign_in_with_email": "Sign in with your email",
+      "submit": "Submit"
+    },
+    "home": {
+      "coached_by": "Coached by",
+      "coach": "Coach",
+      "start": "Start"
+    }
+  },
+  "coachApp": {}
+}
