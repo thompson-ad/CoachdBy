@@ -54,19 +54,8 @@ const AuthCallback = () => {
       try {
         const session = await createSessionFromUrl(url);
         console.log('session', session);
-        if (session) {
-          // Even though we have code for auto-redirection on session change
-          // in /(app)/_layout.tsx, the redirect doesn't work when the session
-          // is created by the callback because that screen is not on the stack yet
-
-          const user = session.user;
-          const role = user.user_metadata?.role;
-
-          if (role === 'coach') {
-            router.replace('/coach');
-          } else {
-            router.replace('/client');
-          }
+        if (session && session.user) {
+          router.replace('/');
           setMessage('Sign-in successful!');
           setIsError(false);
         }

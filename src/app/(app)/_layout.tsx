@@ -1,25 +1,22 @@
-import { useSession } from '@/providers/AuthProvider';
-import { useSegments, Redirect, Slot } from 'expo-router';
+import { Redirect, Slot } from 'expo-router';
+import { useSessionContext } from '@/providers/AuthProvider';
+import { Text } from 'react-native';
 
 export default function AppLayout() {
-  const session = useSession();
-  const segments = useSegments();
+  console.log('rendering group one');
+  const { session, isLoading } = useSessionContext();
 
-  const inAuthGroup = segments[0] === 'callback' || segments.length === 0;
-  const user = session?.user || null;
-
-  if (!user && !inAuthGroup) {
-    console.log('No user, redirecting to /');
-    return <Redirect href="(auth)/sign-in" />;
-  } else if (user && inAuthGroup) {
-    if (session?.user.user_metadata?.role === 'coach') {
-      console.log('redirecting to /coach');
-      return <Redirect href="/coach" />;
-    } else {
-      console.log('No user, redirecting to /client');
-      return <Redirect href="/client" />;
-    }
+  if (isLoading) {
+    return <Text>Loading...</Text>;
   }
 
+  // Only require authentication within the (app) group's layout as users
+  // need to be able to access the (auth) group and sign in again.
+  if (!session) {
+    console.log('no session, redirecting to sign in');
+    return <Redirect href="/sign-in" />;
+  }
+
+  // This layout can be deferred because it's not the root layout.
   return <Slot />;
 }

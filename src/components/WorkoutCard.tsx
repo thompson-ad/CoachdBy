@@ -23,7 +23,6 @@ export function WorkoutCard({
 
   // Get the hierarchy right - most important thing is the movement list
   // muscle group tags (need in DB)
-
   return (
     <Card elevate bordered {...props}>
       {(header || subheading) && (
