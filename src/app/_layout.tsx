@@ -8,7 +8,6 @@ import { AuthProvider } from '@/providers/AuthProvider';
 import { DeepLinkProvider } from '@/providers/DeepLinkProvider';
 import { supabase } from '@/api/supabase/client';
 import { TamaguiProvider } from 'tamagui';
-import { useFonts } from 'expo-font';
 import { config } from '../../tamagui.config';
 import { initialiseI18n } from '@/i18n/setup';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -23,11 +22,6 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const [fontLoaded] = useFonts({
-    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
-    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
-  });
-
   const [sessionLoadAttempted, setSessionLoadAttempted] = useState(false);
   const [initialSession, setInitialSession] = useState<Session | null>(null);
   const [languageLoaded, setLanguageLoaded] = useState(false);
@@ -51,12 +45,12 @@ function RootLayoutNav() {
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
-    if (fontLoaded && sessionLoadAttempted && languageLoaded) {
+    if (sessionLoadAttempted && languageLoaded) {
       await SplashScreen.hideAsync();
     }
-  }, [fontLoaded, languageLoaded, sessionLoadAttempted]);
+  }, [languageLoaded, sessionLoadAttempted]);
 
-  if (!fontLoaded || !sessionLoadAttempted || !languageLoaded) {
+  if (!sessionLoadAttempted || !languageLoaded) {
     return null;
   }
 
@@ -64,7 +58,9 @@ function RootLayoutNav() {
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Providers initialSession={initialSession}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <Slot />
+          <SafeAreaProvider>
+            <Slot />
+          </SafeAreaProvider>
         </GestureHandlerRootView>
       </Providers>
     </View>
@@ -81,9 +77,7 @@ function Providers({
   return (
     <AuthProvider initialSession={initialSession}>
       <DeepLinkProvider>
-        <SafeAreaProvider>
-          <TamaguiProvider config={config}>{children}</TamaguiProvider>
-        </SafeAreaProvider>
+        <TamaguiProvider config={config}>{children}</TamaguiProvider>
       </DeepLinkProvider>
     </AuthProvider>
   );

@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useUser } from '@/providers/AuthProvider';
 import { Avatar, Button, Paragraph, Text, XStack, YStack } from 'tamagui';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { WorkoutCard } from '@/components/WorkoutCard';
 import { useRouter } from 'expo-router';
@@ -13,7 +12,8 @@ import {
 import { useCoachService } from '@/api/supabase/useCoachService';
 import { useAuthService } from '@/api/supabase/useAuthService';
 import { WorkoutBottomSheet } from '@/components/WorkoutBottomSheet';
-import BottomSheet, { TouchableWithoutFeedback } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Profile = {
   id: string;
@@ -80,16 +80,7 @@ export default function ClientHome() {
   const insets = useSafeAreaInsets();
 
   const workouts = programme?.workouts;
-  const currentWorkout = workouts?.[0];
   const userId = user?.id;
-
-  const handleOpenWorkoutSheet = () => {
-    bottomSheetRef.current?.expand();
-  };
-
-  const handleCloseWorkoutSheet = () => {
-    bottomSheetRef.current?.close();
-  };
 
   const loadClientProgramme = useCallback(async () => {
     if (!userId) return;
@@ -150,22 +141,21 @@ export default function ClientHome() {
               </YStack>
             </XStack>
 
-            <YStack mx="$4" justifyContent="center" flex={1}>
-              <TouchableWithoutFeedback onPress={handleOpenWorkoutSheet}>
-                {currentWorkout && (
-                  <WorkoutCard
-                    key={currentWorkout.name}
-                    header={currentWorkout.name}
-                    subheading={currentWorkout.type}
-                    movements={currentWorkout.movements}
-                    footerButton={t('clientApp.home.start')}
-                    onStartPress={() =>
-                      router.push(`/client/program/${currentWorkout.id}`)
-                    }
-                  />
-                )}
-              </TouchableWithoutFeedback>
-            </YStack>
+            <FlatList
+              data={workouts}
+              renderItem={({ item }) => (
+                <WorkoutCard
+                  key={item.name}
+                  header={item.name}
+                  subheading={item.type}
+                  movements={item.movements}
+                  footerButton={t('clientApp.home.start')}
+                  onStartPress={() => router.push(`/client/program/${item.id}`)}
+                />
+              )}
+              keyExtractor={(item) => item.id.toString()}
+            />
+
             <Button onPress={signOut}>Sign Out</Button>
           </>
         )}

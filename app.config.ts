@@ -20,6 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: 'com.coachdby.app',
   },
   android: {
+    package: 'com.coachdby.app',
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#ffffff',
@@ -35,7 +36,26 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       projectId: 'dedf7329-00ff-4541-bb20-8e3c4c388a3d',
     },
   },
-  plugins: ['expo-font', 'expo-localization'],
+  plugins: [
+    'expo-router',
+    [
+      'expo-font',
+      {
+        fonts: [
+          './assets/fonts/Geist-Regular.otf',
+          './assets/fonts/Geist-Bold.otf',
+          './assets/fonts/Geist-Medium.otf',
+          './assets/fonts/Geist-Light.otf',
+          './assets/fonts/Geist-Thin.otf',
+          './assets/fonts/Geist-SemiBold.otf',
+          './assets/fonts/Geist-Ultralight.otf',
+          './assets/fonts/Geist-Black.otf',
+          './assets/fonts/Geist-UltraBlack.otf',
+        ],
+      },
+    ],
+    'expo-localization',
+  ],
   experiments: {
     typedRoutes: true,
   },
