@@ -10,7 +10,9 @@ export type RawProgramData = {
     day: number;
     type: string;
     sections: {
+      order: number;
       section_movements: {
+        order: number;
         movements: {
           name: string;
         } | null;
@@ -35,20 +37,22 @@ export const useProgramService = () => {
             name, 
             day, 
             type, 
-            sections!inner(
-              section_movements!inner(
-                movements(
+            sections!inner (
+              order,
+              section_movements!inner (
+                order,
+                movements (
                   name
                 )
               )
             )
           )
-          `,
+        `,
         )
         .eq('client_id', clientId);
 
       if (error) {
-        console.log('error fetching client program');
+        console.log('error fetching client program', error);
         throw error;
       }
 

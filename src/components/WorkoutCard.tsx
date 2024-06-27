@@ -1,5 +1,5 @@
 import type { CardProps } from 'tamagui';
-import { Button, Card, H2, Paragraph, XStack, YStack } from 'tamagui';
+import { Button, Card, H2, Paragraph, View, XStack, YStack } from 'tamagui';
 
 interface WorkoutCardProps extends CardProps {
   header?: string;
@@ -19,12 +19,10 @@ export function WorkoutCard({
   onStartPress,
   ...props
 }: WorkoutCardProps) {
-  // If I'm going to show movements in order I need to make sure I can set, and fetch them in the order that the coach presecribes
-
-  // Get the hierarchy right - most important thing is the movement list
   // muscle group tags (need in DB)
+
   return (
-    <Card elevate bordered {...props}>
+    <Card {...props} backgroundColor="#EFEFEF">
       {(header || subheading) && (
         <Card.Header>
           {header && <H2>{header}</H2>}
@@ -32,21 +30,36 @@ export function WorkoutCard({
         </Card.Header>
       )}
 
-      {movements && (
+      {movements && movements.length > 0 && (
         <YStack padding="$4">
-          {movements.map((movement) => (
-            <YStack key={movement.name}>
-              <Paragraph fontWeight="bold" color="$color11">
-                {movement.name}
-              </Paragraph>
-            </YStack>
+          {movements.slice(0, 5).map((movement, index) => (
+            <XStack key={movement.name} alignItems="center">
+              <View flexDirection="row" width={14} marginRight="$1">
+                <Paragraph color="#060025">{index + 1}.</Paragraph>
+              </View>
+              <Paragraph color="#060025">{movement.name}</Paragraph>
+            </XStack>
           ))}
+          {movements.length > 5 && (
+            <XStack alignItems="center">
+              <View flexDirection="row" width={14} marginRight="$1">
+                <Paragraph color="#060025">...</Paragraph>
+              </View>
+            </XStack>
+          )}
         </YStack>
       )}
+
       {footerButton && (
         <Card.Footer padded>
-          <XStack flex={1} />
-          <Button onPress={onStartPress} borderRadius="$10">
+          <Button
+            size="$3"
+            variant="outlined"
+            borderWidth={1}
+            borderColor="#060025"
+            borderRadius="$12"
+            color="#060025"
+          >
             {footerButton}
           </Button>
         </Card.Footer>

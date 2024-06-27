@@ -42,13 +42,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'expo-font',
       {
         fonts: [
-          './assets/fonts/Geist-Regular.otf',
-          './assets/fonts/Geist-Bold.otf',
-          './assets/fonts/Geist-Medium.otf',
-          './assets/fonts/Geist-Light.otf',
           './assets/fonts/Geist-Thin.otf',
-          './assets/fonts/Geist-SemiBold.otf',
           './assets/fonts/Geist-Ultralight.otf',
+          './assets/fonts/Geist-Light.otf',
+          './assets/fonts/Geist-Regular.otf',
+          './assets/fonts/Geist-Medium.otf',
+          './assets/fonts/Geist-SemiBold.otf',
+          './assets/fonts/Geist-Bold.otf',
           './assets/fonts/Geist-Black.otf',
           './assets/fonts/Geist-UltraBlack.otf',
         ],

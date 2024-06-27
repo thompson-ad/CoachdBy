@@ -13,14 +13,17 @@ export type Database = {
         Row: {
           client_id: string;
           coach_id: string;
+          updated_at: string | null;
         };
         Insert: {
           client_id: string;
           coach_id: string;
+          updated_at?: string | null;
         };
         Update: {
           client_id?: string;
           coach_id?: string;
+          updated_at?: string | null;
         };
         Relationships: [
           {
@@ -203,14 +206,17 @@ export type Database = {
         Row: {
           id: number;
           role_name: string;
+          updated_at: string | null;
         };
         Insert: {
           id?: number;
           role_name: string;
+          updated_at?: string | null;
         };
         Update: {
           id?: number;
           role_name?: string;
+          updated_at?: string | null;
         };
         Relationships: [];
       };
@@ -219,34 +225,40 @@ export type Database = {
           circuit_group: string | null;
           movement_id: string;
           notes: string | null;
+          order: number | null;
           reps: string;
           rest: number | null;
           rir: string | null;
           section_id: string;
           sets: number;
           superset_group: string | null;
+          updated_at: string | null;
         };
         Insert: {
           circuit_group?: string | null;
           movement_id: string;
           notes?: string | null;
+          order?: number | null;
           reps: string;
           rest?: number | null;
           rir?: string | null;
           section_id: string;
           sets: number;
           superset_group?: string | null;
+          updated_at?: string | null;
         };
         Update: {
           circuit_group?: string | null;
           movement_id?: string;
           notes?: string | null;
+          order?: number | null;
           reps?: string;
           rest?: number | null;
           rir?: string | null;
           section_id?: string;
           sets?: number;
           superset_group?: string | null;
+          updated_at?: string | null;
         };
         Relationships: [
           {
@@ -270,6 +282,7 @@ export type Database = {
           created_at: string;
           id: string;
           name: string | null;
+          order: number | null;
           type: string | null;
           updated_at: string;
           workout_id: string;
@@ -278,6 +291,7 @@ export type Database = {
           created_at?: string;
           id?: string;
           name?: string | null;
+          order?: number | null;
           type?: string | null;
           updated_at?: string;
           workout_id: string;
@@ -286,6 +300,7 @@ export type Database = {
           created_at?: string;
           id?: string;
           name?: string | null;
+          order?: number | null;
           type?: string | null;
           updated_at?: string;
           workout_id?: string;
@@ -304,14 +319,17 @@ export type Database = {
         Row: {
           profile_id: string;
           role_id: number;
+          updated_at: string | null;
         };
         Insert: {
           profile_id: string;
           role_id: number;
+          updated_at?: string | null;
         };
         Update: {
           profile_id?: string;
           role_id?: number;
+          updated_at?: string | null;
         };
         Relationships: [
           {

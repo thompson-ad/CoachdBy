@@ -54,12 +54,15 @@ export const transformProgramToViewModel = (
       day: workout.day,
       name: workout.name,
       type: workout.type,
-      movements: workout.sections.flatMap((section) =>
-        section.section_movements
-          .map((section_movement) => section_movement.movements?.name)
-          .filter((name): name is string => name !== undefined)
-          .map((name) => ({ name })),
-      ),
+      movements: workout.sections
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        .flatMap((section) =>
+          section.section_movements
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+            .map((section_movement) => section_movement.movements?.name)
+            .filter((name): name is string => name !== undefined)
+            .map((name) => ({ name })),
+        ),
     })),
   };
 };
@@ -124,8 +127,6 @@ export default function ClientHome() {
         ) : (
           <>
             <XStack alignItems="center" gap="$3">
-              {/* We need avatar in the DB too */}
-              {/* And we need consistency streak */}
               <Avatar circular size="$6">
                 <Avatar.Image
                   accessibilityLabel="Coach Cam"
