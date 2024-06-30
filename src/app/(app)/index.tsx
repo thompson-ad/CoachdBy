@@ -1,7 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { View, ActivityIndicator, FlatList } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
 import { useUser } from '@/providers/AuthProvider';
-import { Avatar, Button, Paragraph, Text, XStack, YStack } from 'tamagui';
+import {
+  Avatar,
+  Button,
+  Heading,
+  Paragraph,
+  Text,
+  XStack,
+  YStack,
+  View,
+} from 'tamagui';
 import { useTranslation } from 'react-i18next';
 import { WorkoutCard } from '@/components/WorkoutCard';
 import { useRouter } from 'expo-router';
@@ -121,12 +130,17 @@ export default function ClientHome() {
 
   return (
     <>
-      <YStack f={1} pb={insets.bottom} pt={insets.top} gap="$8">
+      <YStack
+        flex={1}
+        paddingHorizontal="$5"
+        paddingBottom={insets.bottom}
+        paddingTop={insets.top}
+      >
         {error ? (
           <Text>{error}</Text>
         ) : (
           <>
-            <XStack alignItems="center" gap="$3">
+            <XStack alignItems="center" gap="$3" marginBottom="$8">
               <Avatar circular size="$6">
                 <Avatar.Image
                   accessibilityLabel="Coach Cam"
@@ -142,6 +156,12 @@ export default function ClientHome() {
               </YStack>
             </XStack>
 
+            <View marginBottom="$5">
+              <Heading fontWeight="500" fontSize="$10" lineHeight="$10">
+                {programme?.name}
+              </Heading>
+            </View>
+
             <FlatList
               data={workouts}
               renderItem={({ item }) => (
@@ -155,6 +175,7 @@ export default function ClientHome() {
                 />
               )}
               keyExtractor={(item) => item.id.toString()}
+              contentContainerStyle={{ gap: 24 }}
             />
 
             <Button onPress={signOut}>Sign Out</Button>

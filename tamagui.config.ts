@@ -30,7 +30,7 @@ const geistFont = createFont({
   family: 'Geist-Regular',
   face: {
     100: { normal: 'Geist-Thin' },
-    200: { normal: 'Geist-Ultralight' },
+    200: { normal: 'Geist-UltraLight' },
     300: { normal: 'Geist-Light' },
     400: { normal: 'Geist-Regular' },
     500: { normal: 'Geist-Medium' },

@@ -31,7 +31,7 @@ export function WorkoutCard({
       )}
 
       {movements && movements.length > 0 && (
-        <YStack padding="$4">
+        <YStack paddingHorizontal="$4">
           {movements.slice(0, 5).map((movement, index) => (
             <XStack key={movement.name} alignItems="center">
               <View flexDirection="row" width={14} marginRight="$1">

@@ -43,7 +43,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         fonts: [
           './assets/fonts/Geist-Thin.otf',
-          './assets/fonts/Geist-Ultralight.otf',
+          './assets/fonts/Geist-UltraLight.otf',
           './assets/fonts/Geist-Light.otf',
           './assets/fonts/Geist-Regular.otf',
           './assets/fonts/Geist-Medium.otf',
