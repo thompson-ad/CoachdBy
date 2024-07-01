@@ -3,9 +3,9 @@ import type { ConfigContext, ExpoConfig } from '@expo/config';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'coachdby',
+  name: 'spotr',
   slug: 'coachdby',
-  scheme: 'coachdby',
+  scheme: 'spotr',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',
@@ -17,10 +17,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'com.coachdby.app',
+    bundleIdentifier: 'com.spotr.app',
   },
   android: {
-    package: 'com.coachdby.app',
+    package: 'com.spotr.app',
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#ffffff',

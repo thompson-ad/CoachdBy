@@ -3,7 +3,6 @@ import { useSessionContext } from '@/providers/AuthProvider';
 import { Text } from 'react-native';
 
 export default function AppLayout() {
-  console.log('rendering group one');
   const { session, isLoading } = useSessionContext();
 
   if (isLoading) {

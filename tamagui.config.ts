@@ -55,8 +55,6 @@ const customConfig = {
   },
 };
 
-console.log(JSON.stringify(customConfig));
-
 export const config = createTamagui(customConfig);
 
 export default config;

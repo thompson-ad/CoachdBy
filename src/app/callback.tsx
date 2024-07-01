@@ -53,7 +53,6 @@ const AuthCallback = () => {
       const url = event.link;
       try {
         const session = await createSessionFromUrl(url);
-        console.log('session', session);
         if (session && session.user) {
           router.replace('/');
           setMessage('Sign-in successful!');
